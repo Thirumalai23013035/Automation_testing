@@ -96,7 +96,7 @@ login.click()
 time.sleep(3)
 
 email = driver.find_element(By.ID, "ap_email_login")
-email.send_keys("7339413624")
+email.send_keys("8870794020")
 continue_button = driver.find_element(
     By.XPATH, "//input[@type='submit']"
 )
@@ -122,7 +122,6 @@ driver.quit()
 ```
 
 ### Output
-<img width="1263" height="955" alt="image" src="https://github.com/user-attachments/assets/03c39d3c-89f4-41a0-ad03-a375c718fe4a" />
 
 <img width="1282" height="971" alt="image" src="https://github.com/user-attachments/assets/c4a811bc-2f1e-483f-b0df-362a6e0ddeac" />
 
