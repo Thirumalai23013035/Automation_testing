@@ -2,57 +2,79 @@
 ## Flipkart
 ### Code
 ```
-from selenium import webdriver
+import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
-import time
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time, random
 
-driver = webdriver.Chrome()
+PHONE = "7339413624"
 
-driver.get("https://www.flipkart.com/")
-
+driver = uc.Chrome()
+driver.maximize_window()
+wait = WebDriverWait(driver, 20)
+driver.get("https://www.flipkart.com")
 time.sleep(3)
+popup_xpath = "//*[contains(text(),'Log in for the best experience') or contains(text(),'Enter your phone number')]"
+if not driver.find_elements(By.XPATH, popup_xpath):
+    for xp in ["//a[normalize-space()='Login']", "//span[normalize-space()='Login']", "//*[normalize-space()='Login']"]:
+        try:
+            wait.until(EC.element_to_be_clickable((By.XPATH, xp))).click()
+            break
+        except Exception:
+            continue
 
-# Click Login
-login = driver.find_element(
-    By.CSS_SELECTOR,
-    "a[title='Login']"
-)
-
-driver.execute_script("arguments[0].click();", login)
-
-time.sleep(3)
-
-# Enter mobile number
-mobile = driver.find_element(
-    By.CSS_SELECTOR,
-    "input[type='number']"
-)
-
-mobile.send_keys("7339413624")
-
-print("Mobile number entered")
-
+wait.until(EC.visibility_of_element_located((By.XPATH, popup_xpath)))
 time.sleep(1)
 
-# Click Continue
-continue_button = driver.find_element(
+box = wait.until(EC.element_to_be_clickable((
     By.XPATH,
-    "//button[contains(., 'Continue')]"
-)
+    "//input[not(@name='q') and not(@type='hidden') and not(@type='checkbox') "
+    "and not(contains(@class,'Pke_EE')) and not(@title)]"
+    "[ancestor::*[.//text()[contains(.,'Log in for the best experience')]]]"
+)))
 
-continue_button.click()
 
-print("Continue clicked")
+driver.execute_script("arguments[0].focus(); arguments[0].click();", box)
+time.sleep(0.5)
 
-time.sleep(5)
-input("Press Enter to close the browser...")
+for ch in PHONE:
+    box.send_keys(ch)
+    time.sleep(random.uniform(0.1, 0.3))
+
+
+print("Box value:", box.get_attribute("value"))
+
+wait.until(EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))).click()
+
+otp = input("OTP type pannunga: ").strip()
+time.sleep(1)
+
+actions = ActionChains(driver)
+for ch in otp:
+    actions.send_keys(ch).pause(random.uniform(0.1, 0.3))
+actions.perform()
+
+try:
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((
+        By.XPATH, "//button[contains(.,'Verify') or contains(.,'Login')]"
+    ))).click()
+except Exception:
+    pass
+
+time.sleep(4)
+print("Done:", driver.current_url)
+input("Close panna Enter press pannunga...")
+driver.quit()
 ```
 ### Output
-<img width="1245" height="967" alt="image" src="https://github.com/user-attachments/assets/d06c213d-cac2-4dd5-8189-6442a916ccf1" />
+<img width="1912" height="975" alt="Screenshot 2026-10-05 144935" src="https://github.com/user-attachments/assets/7c24fe14-aa3c-4150-8436-c2820bf7aaf3" />
+<img width="1917" height="1076" alt="Screenshot 2026-10-05 144739" src="https://github.com/user-attachments/assets/e313acef-d171-4c8c-8dba-f838914980a5" />
+<img width="1917" height="1078" alt="Screenshot 2026-10-05 145007" src="https://github.com/user-attachments/assets/83947a97-fae9-4f64-b68d-d8e3043e93b0" />
 
-<img width="1253" height="957" alt="image" src="https://github.com/user-attachments/assets/4fa047dd-253d-42a6-82d0-54e5ea57b56c" />
 
-<img width="1252" height="922" alt="image" src="https://github.com/user-attachments/assets/50c72f16-a679-4f82-a102-d77efc36e163" />
+
 
 
 ## Amazon
