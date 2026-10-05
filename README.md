@@ -106,6 +106,5 @@ driver.quit()
 
 <img width="1278" height="913" alt="image" src="https://github.com/user-attachments/assets/974375b6-b679-4bdd-8b18-d19b537bdcbe" />
 
-<img width="1285" height="872" alt="image" src="https://github.com/user-attachments/assets/eeccb148-bdee-40fa-8060-478d353cc728" />
+<img width="1913" height="1025" alt="image" src="https://github.com/user-attachments/assets/7f056f69-f032-4713-a2c4-d5447b53bc50" />
 
-<img width="1280" height="938" alt="image" src="https://github.com/user-attachments/assets/a9d7417c-c190-4ca5-832f-4b9a13f42e2b" />
